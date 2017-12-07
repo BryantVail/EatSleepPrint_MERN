@@ -1,0 +1,25 @@
+{
+  "name": "eatsleepprint",
+  "version": "1.0.0",
+  "description": "ecommerce page for eat sleep print llc",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -w serverCh5.js serverCh5.js",
+    "compile": "babel ../../src --presets react,env --out-dir ../../static",
+    "watch": "babel ../../src --presets react,env --out-dir ../../static -watch"
+  },
+  "author": "vailsummit",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.15.4",
+    "mongodb": "^2.2.31"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "nodemon": "^1.12.4"
+  }
+}

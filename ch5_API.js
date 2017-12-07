@@ -1,0 +1,272 @@
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var contentNode = document.getElementById('contents');
+
+var OrderFilter = function (_React$Component) {
+    _inherits(OrderFilter, _React$Component);
+
+    function OrderFilter() {
+        _classCallCheck(this, OrderFilter);
+
+        return _possibleConstructorReturn(this, (OrderFilter.__proto__ || Object.getPrototypeOf(OrderFilter)).apply(this, arguments));
+    }
+
+    _createClass(OrderFilter, [{
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                ' This is a placeholder for Order Filter. '
+            );
+        }
+    }]);
+
+    return OrderFilter;
+}(React.Component);
+
+var OrderRow = function OrderRow(props) {
+    return React.createElement(
+        'tr',
+        null,
+        React.createElement(
+            'td',
+            null,
+            props.order.id
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.order.status
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.order.user
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.order.dateCreated
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.order.total
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.order.completedDate ? props.order.completionDate.toDateString() : ''
+        ),
+        React.createElement(
+            'td',
+            null,
+            props.order.title
+        )
+    );
+};
+//end OrderRow
+
+
+function OrderTable(props) {
+    var orderRows = props.orders.map(function (order) {
+        return React.createElement(OrderRow, { key: order.id, order: order });
+    });
+    return React.createElement(
+        'table',
+        { className: 'bordered-table' },
+        React.createElement(
+            'thead',
+            null,
+            React.createElement(
+                'tr',
+                null,
+                React.createElement(
+                    'th',
+                    null,
+                    'ID'
+                ),
+                React.createElement(
+                    'th',
+                    null,
+                    'Status'
+                ),
+                React.createElement(
+                    'th',
+                    null,
+                    'User'
+                ),
+                React.createElement(
+                    'th',
+                    null,
+                    'Date Created'
+                ),
+                React.createElement(
+                    'th',
+                    null,
+                    'Total Cost'
+                ),
+                React.createElement(
+                    'th',
+                    null,
+                    'Completion Date'
+                ),
+                React.createElement(
+                    'th',
+                    null,
+                    'Title '
+                )
+            )
+        ),
+        React.createElement(
+            'tbody',
+            null,
+            orderRows
+        )
+    );
+} //end IssueTable
+
+
+var OrderAdd = function (_React$Component2) {
+    _inherits(OrderAdd, _React$Component2);
+
+    function OrderAdd() {
+        _classCallCheck(this, OrderAdd);
+
+        var _this2 = _possibleConstructorReturn(this, (OrderAdd.__proto__ || Object.getPrototypeOf(OrderAdd)).call(this));
+
+        _this2.handleSubmit = _this2.handleSubmit.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(OrderAdd, [{
+        key: 'handleSubmit',
+        value: function handleSubmit(e) {
+            e.preventDefault();
+            var form = document.forms.orderAdd;
+            this.props.createOrder({
+                user: form.user.value,
+                title: form.title.value,
+                status: "New",
+                created: new Date()
+            });
+
+            //clear text fields
+            form.user.value = "";form.title.value = "";
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(
+                    'form',
+                    { name: 'orderAdd', onSubmit: this.handleSubmit },
+                    React.createElement('input', { type: 'text', name: 'user', placeholder: 'UserName' }),
+                    React.createElement('input', { type: 'text', name: 'title', placeholder: 'Title' }),
+                    React.createElement(
+                        'button',
+                        null,
+                        'Add'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return OrderAdd;
+}(React.Component); //end OrderAdd
+
+
+var OrderList = function (_React$Component3) {
+    _inherits(OrderList, _React$Component3);
+
+    //list of objects for the UI
+    function OrderList() {
+        _classCallCheck(this, OrderList);
+
+        var _this3 = _possibleConstructorReturn(this, (OrderList.__proto__ || Object.getPrototypeOf(OrderList)).call(this));
+
+        _this3.state = { orders: [] };
+
+        _this3.createOrder = _this3.createOrder.bind(_this3);
+        return _this3;
+    } //end constructor
+
+    _createClass(OrderList, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.loadData();
+        }
+    }, {
+        key: 'loadData',
+        value: function loadData() {
+            var _this4 = this;
+
+            fetch('/api/orders').then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                console.log("Total count of records:", data._metadata.total_count);
+                data.records.forEach(function (order) {
+                    order.createdDate = new Date(order.dateCreated);
+                    if (order.completionDate) {
+                        order.completionDate = new Date(order.completionDate);
+                    }
+                });
+                _this4.setState({ orders: data.records });
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    }, {
+        key: 'createOrder',
+        value: function createOrder(newOrder) {
+            var _this5 = this;
+
+            fetch('api/orders', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newOrder)
+            }).then(function (response) {
+                return response.json();
+            }).then(function (updatedOrder) {
+                upatedOrder.created = new Date(updatedOrder.created);
+                if (updatedOrder.completionDate) {
+                    updatedOrder.completionDate = new Date(updatedOrder.completionDate);
+                }
+                var newOrders = _this5.state.orders.concat(updatedOrder);
+                _this5.setState({ orders: newOrders });
+            }).catch(function (err) {
+                alert("Error in sending data to server: " + err.message);
+            });
+        } //end createOrder     
+
+    }, {
+        key: 'render',
+        value: function render() {
+            return React.createElement(
+                'div',
+                null,
+                React.createElement(OrderFilter, null),
+                React.createElement('hr', null),
+                React.createElement(OrderTable, { orders: this.state.orders }),
+                React.createElement('hr', null),
+                React.createElement(OrderAdd, { createOrder: this.createOrder })
+            );
+        }
+    }]);
+
+    return OrderList;
+}(React.Component);
+
+ReactDOM.render(React.createElement(OrderList, null), contentNode); //render the component inside the content node
