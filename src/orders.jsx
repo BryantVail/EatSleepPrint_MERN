@@ -8,18 +8,18 @@ class OrderFilter extends React.Component{
     }
 }
 
-const OrderRow = (props)=> (
+const OrderRow = (props) => {
 
     <tr>
         <td>{props.order.id}</td>
         <td>{props.order.status}</td>
         <td>{props.order.user}</td>
-        <td>{props.order.dateCreated}</td>
+        <td>{props.order.dateCreated.toDateString()}</td>
         <td>{props.order.total}</td>
-        <td>{props.order.completedDate ? props.order.completionDate.toDateString() : ''}</td>
+        <td>{props.order.dateCompleted ? props.order.dateCompleted.toDateString() : ''}</td>
         <td>{props.order.title}</td>
     </tr>
-)
+}
 //end OrderRow
 
 
@@ -34,7 +34,7 @@ function OrderTable(props){
                         <th>User</th>
                         <th>Date Created</th>
                         <th>Total Cost</th>
-                        <th>Completion Date</th>
+                        <th>Date Completed</th>
                         <th>Title </th>
                     </tr>
                 </thead>
@@ -101,9 +101,9 @@ class OrderList extends React.Component {//list of objects for the UI
         ).then(data => {
             console.log("Total count of records:", data._metadata.total_count);
             data.records.forEach(order => {
-                order.createdDate = new Date(order.dateCreated);
-                if(order.completionDate){
-                    order.completionDate = new Date(order.completionDate);
+                order.dateCreated = new Date(order.dateCreated);
+                if(order.dateCompleted){
+                    order.dateCompleted = new Date(order.dateCompleted);
                 }
             });
             this.setState({orders: data.records});
@@ -120,8 +120,8 @@ class OrderList extends React.Component {//list of objects for the UI
         }).then(response => response.json()
         ).then(updatedOrder => {
             upatedOrder.created = new Date(updatedOrder.created);
-            if(updatedOrder.completionDate){
-                updatedOrder.completionDate = new Date(updatedOrder.completionDate);
+            if(updatedOrder.dateCompleted){
+                updatedOrder.dateCompleted = new Date(updatedOrder.dateCompleted);
             }
                 const newOrders = this.state.orders.concat(updatedOrder);
                 this.setState({orders: newOrders});

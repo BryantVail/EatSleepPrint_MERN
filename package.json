@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -w serverCh5.js serverCh5.js",
+    "start": "nodemon -w server.js server.js",
     "compile": "babel ../../src --presets react,env --out-dir ../../static",
     "watch": "babel ../../src --presets react,env --out-dir ../../static -watch"
   },

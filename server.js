@@ -12,14 +12,14 @@ app.use(bodyParser.json());
 const orders = [
 
     {
-        id:1, status:"Open", user: "Raven", createdDate: new Date("2016-08-15"), 
-        effort:5, completionDate: undefined, title:'Holiday Rush',
+        id:1, status:"Open", user: "Raven", dateCreated: new Date("2016-08-15"), 
+        total:5, dateCompleted: undefined, title:'Holiday Rush',
     }, 
     {
-        id:2, status:'Assigned', user:'EddieA', createdDate: new Date('2016-08-16'), 
-        effort:14, completionDate: new Date('2016-08-30'), title:'Lawn Monkeys', 
+        id:2, status:'Assigned', user:'EddieA', dateCreated: new Date('2016-08-16'), 
+       total:14, dateCompleted: new Date('2016-08-30'), title:'Lawn Monkeys', 
     },
-]//end orders array
+];//end orders array
 
 app.get('/api/orders', (req,res) => {
     const metadata = {total_count:orders.length};
@@ -30,7 +30,7 @@ app.get('/api/orders', (req,res) => {
 app.post('/api/orders', (req,res) => {
     const newOrder = req.body;
     newOrder.id = orders.length +1;
-    newOrder.createdDate = new Date();
+    newOrder.dateCreated = new Date();
 
     if(!newOrder.status){
         newOrder.status = "New";
