@@ -1,27 +1,28 @@
 const contentNode = document.getElementById('contents');
 
-class IssueFilter extends React.Component {
+class OrderFilter extends React.Component {
   render() {
     return (
-      <div>This is a placeholder for the Issue Filter.</div>
+      <div>This is a placeholder for the Order Filter.</div>
     )
   }
 }
 
-const IssueRow = (props) => (
+const OrderRow = (props) => (
   <tr>
-    <td>{props.issue._id}</td>
-    <td>{props.issue.status}</td>
-    <td>{props.issue.owner}</td>
-    <td>{props.issue.created.toDateString()}</td>
-    <td>{props.issue.effort}</td>
-    <td>{props.issue.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
-    <td>{props.issue.title}</td>
+    <td>{props.order._id}</td>
+    <td>{props.order.status}</td>
+    <td>{props.order.owner}</td>
+    <td>{props.order.created.toDateString()}</td>
+    <td>{props.order.effort}</td>
+    <td>{props.order.effort}</td>
+    <td>{props.order.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
+    <td>{props.order.title}</td>
   </tr>
 )
 
-function IssueTable(props) {
-  const issueRows = props.issues.map(issue => <IssueRow key={issue._id} issue={issue} />)
+function OrderTable(props) {
+  const orderRows = props.orders.map(issue => <OrderRow key={order._id} order={order} />)
   return (
     <table className="bordered-table">
       <thead>
@@ -35,12 +36,12 @@ function IssueTable(props) {
           <th>Title</th>
         </tr>
       </thead>
-      <tbody>{issueRows}</tbody>
+      <tbody>{orderRows}</tbody>
     </table>
   );
 }
 
-class IssueAdd extends React.Component {
+class OrderAdd extends React.Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,8 +49,8 @@ class IssueAdd extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    var form = document.forms.issueAdd;
-    this.props.createIssue({
+    var form = document.forms.orderAdd;
+    this.props.createOrder({
       owner: form.owner.value,
       title: form.title.value,
       status: 'New',
@@ -62,7 +63,7 @@ class IssueAdd extends React.Component {
   render() {
     return (
       <div>
-        <form name="issueAdd" onSubmit={this.handleSubmit}>
+        <form name="orderAdd" onSubmit={this.handleSubmit}>
           <input type="text" name="owner" placeholder="Owner" />
           <input type="text" name="title" placeholder="Title" />
           <button>Add</button>
@@ -72,12 +73,12 @@ class IssueAdd extends React.Component {
   }
 }
 
-class IssueList extends React.Component {
+class OrderList extends React.Component {
   constructor() {
     super();
-    this.state = { issues: [] };
+    this.state = { orders: [] };
 
-    this.createIssue = this.createIssue.bind(this);
+    this.createOrder = this.createOrder.bind(this);
   }
 
   componentDidMount() {
@@ -89,16 +90,16 @@ class IssueList extends React.Component {
       if (response.ok) {
         response.json().then(data => {
           console.log("Total count of records:", data._metadata.total_count);
-          data.records.forEach(issue => {
-            issue.created = new Date(issue.created);
-            if (issue.completionDate)
-              issue.completionDate = new Date(issue.completionDate);
+          data.records.forEach(order => {
+            order.created = new Date(order.created);
+            if (order.completionDate)
+            order.completionDate = new Date(order.completionDate);
           });
-          this.setState({ issues: data.records });
+          this.setState({ orders: data.records });
         });
       } else {
         response.json().then(error => {
-          alert("Failed to fetch issues:" + error.message)
+          alert("Failed to fetch orders:" + error.message)
         });
       }
     }).catch(err => {
@@ -106,23 +107,23 @@ class IssueList extends React.Component {
     });
   }
 
-  createIssue(newIssue) {
-    fetch('/api/issues', {
+  createOrder(newOrder) {
+    fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newIssue),
+      body: JSON.stringify(newOrder),
     }).then(response => {
       if (response.ok) {
-        response.json().then(updatedIssue => {
-          updatedIssue.created = new Date(updatedIssue.created);
-          if (updatedIssue.completionDate)
-            updatedIssue.completionDate = new Date(updatedIssue.completionDate);
-          const newIssues = this.state.issues.concat(updatedIssue);
-          this.setState({ issues: newIssues });
+        response.json().then(updatedOrder => {
+          updatedOrder.created = new Date(updatedOrder.created);
+          if (updatedOrder.completionDate)
+            updatedOrder.completionDate = new Date(updatedOrder.completionDate);
+          const newOrders = this.state.orders.concat(updatedOrder);
+          this.setState({ orders: newOrders });
         });
       } else {
         response.json().then(error => {
-          alert("Failed to add issue: " + error.message)
+          alert("Failed to add order: " + error.message)
         });
       }
     }).catch(err => {
@@ -133,15 +134,15 @@ class IssueList extends React.Component {
   render() {
     return (
       <div>
-        <h1>Issue Tracker</h1>
-        <IssueFilter />
+        <h1>Order Tracker</h1>
+        <OrderFilter />
         <hr />
-        <IssueTable issues={this.state.issues} />
+        <OrderTable orders={this.state.orders} />
         <hr />
-        <IssueAdd createIssue={this.createIssue}/>
+        <OrderAdd createOrder={this.createOrder}/>
       </div>
     );
   }
 }
 
-ReactDOM.render(<IssueList />, contentNode);    // Render the component inside the content Node
+ReactDOM.render(<OrderList />, contentNode);    // Render the component inside the content Node
