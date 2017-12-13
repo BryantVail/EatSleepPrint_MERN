@@ -13,9 +13,14 @@ app.use(bodyParser.json());
 
 
 app.get('/api/orders', (req,res) => {
-    const metadata = {total_count:orders.length};
-    console.log("sending out JSON now.")
-    res.json({_metadata: metadata, records: orders});
+    console.log('processed "/api/orders"');
+    db.collection('orders').find().toArray().then(orders =>{
+        const metadata = {total_count:orders.length};
+        res.json({_metadata: metadata, records:orders})
+    }).catch(error =>{
+        console.log(error);
+        res.status(500).json({message:'Internal Server Error: ${error}'});
+    });
 });
 
 app.post('/api/orders', (req,res) => {
@@ -32,7 +37,7 @@ app.post('/api/orders', (req,res) => {
 
 
 let db;
-MongoClient.connect('mongodb://localhost/OrderTracker').then(connection => {
+MongoClient.connect('mongodb://localhost/C:/mongodb/server/3.6/bin/OrderTracker').then(connection => {
     db = connection;
     app.listen(3000, () =>{
         console.log('App status:Running, port:3000');

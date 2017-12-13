@@ -86,7 +86,14 @@ class OrderList extends React.Component {
   }
 
   loadData() {
-    fetch('/api/issues').then(response => {
+
+    var myInit = {
+      method:'GET',
+      cache: 'default'
+
+    };
+
+    fetch('../server.js/api/orders', myInit).then(response => {
       if (response.ok) {
         response.json().then(data => {
           console.log("Total count of records:", data._metadata.total_count);
@@ -103,7 +110,7 @@ class OrderList extends React.Component {
         });
       }
     }).catch(err => {
-      alert("Error in fetching data from server:", err);
+      alert("Error in fetching data from server:"+err.message, err.message);
     });
   }
 
