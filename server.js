@@ -1,25 +1,16 @@
-const express   = require('express');
-const bodyParser= require('body-parser');
-const app       = express();
+const express       = require('express');
+const bodyParser    = require('body-parser');
+const MongoClient   = require('mongodb').MongoClient;
 
+
+const app = express();
 app.set('json spaces', 4);
-
 app.use(express.static('static'));
 app.use(bodyParser.json());
 
 
 
-const orders = [
 
-    {
-        id:1, status:"Open", user: "Raven", dateCreated: new Date("2016-08-15"), 
-        total:5, dateCompleted: undefined, title:'Holiday Rush',
-    }, 
-    {
-        id:2, status:'Assigned', user:'EddieA', dateCreated: new Date('2016-08-16'), 
-       total:14, dateCompleted: new Date('2016-08-30'), title:'Lawn Monkeys', 
-    },
-];//end orders array
 
 app.get('/api/orders', (req,res) => {
     const metadata = {total_count:orders.length};
@@ -39,7 +30,16 @@ app.post('/api/orders', (req,res) => {
     }
 })
 
-app.listen(3000, () => {
-    console.log('App Started on port 3000');
+
+let db;
+MongoClient.connect('mongodb://localhost/OrderTracker').then(connection => {
+    db = connection;
+    app.listen(3000, () =>{
+        console.log('App status:Running, port:3000');
+    });
+}).catch(error =>{
+    console.log('ERROR:', error);
 });
+
+
 
