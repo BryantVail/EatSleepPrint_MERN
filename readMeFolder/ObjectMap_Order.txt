@@ -1,0 +1,35 @@
+In order to build a quote I need the following information:
+
+Amount of shirts
+Color of shirts
+Size of shirts
+Number of colors in design
+Number of places printed on shirts
+
+Additional variables that reflect pricing are shirt material/style and graphic design services if necessary
+
+public class Design{
+
+	graphic: 	png;
+	customGraphic:	bool;
+	colors:		int;
+}
+
+public class PrintItem{
+	type:			string;	//shirt,shorts etc
+	sub-type:		string; //polo, tee
+	material:		string; //dri-fit
+	brand:			string; //nike, columbia
+	color:			string; //blue,red
+	size:			string; //s,m,l,xl
+	graphics[]:		Design;
+	graphicLocations:	GraphicLocations;
+}
+
+public class GraphicLocation{
+	design:		Design;
+	imageRadius:	double; //in cm
+	front:		bool;
+	back:		bool;
+	sleeveL:	bool;
+	sleeveR:	bool;
