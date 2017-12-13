@@ -1,163 +1,147 @@
 const contentNode = document.getElementById('contents');
 
-class OrderFilter extends React.Component{
-    render(){
-        return(
-            <div> This is a placeholder for Order Filter. </div>
-        )
-    }
+class IssueFilter extends React.Component {
+  render() {
+    return (
+      <div>This is a placeholder for the Issue Filter.</div>
+    )
+  }
 }
 
-const OrderRow = (props) => {
+const IssueRow = (props) => (
+  <tr>
+    <td>{props.issue._id}</td>
+    <td>{props.issue.status}</td>
+    <td>{props.issue.owner}</td>
+    <td>{props.issue.created.toDateString()}</td>
+    <td>{props.issue.effort}</td>
+    <td>{props.issue.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
+    <td>{props.issue.title}</td>
+  </tr>
+)
 
-    <tr>
-        <td>{props.order.id}</td>
-        <td>{props.order.status}</td>
-        <td>{props.order.user}</td>
-        <td>{props.order.dateCreated.toDateString()}</td>
-        <td>{props.order.total}</td>
-        <td>{props.order.dateCompleted ? props.order.dateCompleted.toDateString() : ''}</td>
-        <td>{props.order.title}</td>
-    </tr>
+function IssueTable(props) {
+  const issueRows = props.issues.map(issue => <IssueRow key={issue._id} issue={issue} />)
+  return (
+    <table className="bordered-table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Status</th>
+          <th>Owner</th>
+          <th>Created</th>
+          <th>Effort</th>
+          <th>Completion Date</th>
+          <th>Title</th>
+        </tr>
+      </thead>
+      <tbody>{issueRows}</tbody>
+    </table>
+  );
 }
-//end OrderRow
 
+class IssueAdd extends React.Component {
+  constructor() {
+    super();
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-function OrderTable(props){
-    const orderRows = props.orders.map(order => <OrderRow key={order.id} order={order} /> )
-        return(
-            <table className="bordered-table" >
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Status</th>
-                        <th>User</th>
-                        <th>Date Created</th>
-                        <th>Total Cost</th>
-                        <th>Date Completed</th>
-                        <th>Title </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {orderRows}
-                </tbody>
-            </table>
-        );
+  handleSubmit(e) {
+    e.preventDefault();
+    var form = document.forms.issueAdd;
+    this.props.createIssue({
+      owner: form.owner.value,
+      title: form.title.value,
+      status: 'New',
+      created: new Date(),
+    });
+    // clear the form for the next input
+    form.owner.value = ""; form.title.value = "";
+  }
 
-}//end IssueTable
+  render() {
+    return (
+      <div>
+        <form name="issueAdd" onSubmit={this.handleSubmit}>
+          <input type="text" name="owner" placeholder="Owner" />
+          <input type="text" name="title" placeholder="Title" />
+          <button>Add</button>
+        </form>
+      </div>
+    )
+  }
+}
 
+class IssueList extends React.Component {
+  constructor() {
+    super();
+    this.state = { issues: [] };
 
+    this.createIssue = this.createIssue.bind(this);
+  }
 
+  componentDidMount() {
+    this.loadData();
+  }
 
-class OrderAdd extends React.Component {
-   constructor(){
-        super();
-        this.handleSubmit = this.handleSubmit.bind(this);
-        }
-
-        handleSubmit(e){
-            e.preventDefault();
-            var form = document.forms.orderAdd;
-            this.props.createOrder({
-                user:      form.user.value,
-                title:      form.title.value,
-                status:     "New",
-                created:    new Date(),
-            });
-
-            //clear text fields
-            form.user.value = "";  form.title.value= "";
-        }
-    render(){
-        return(
-
-            <div>
-                <form name="orderAdd" onSubmit={this.handleSubmit}>
-                    <input type="text" name="user" placeholder="UserName" />
-                    <input type ="text" name="title" placeholder="Title" />
-                    <button>Add</button>
-                </form >  
-            </div>
-        )
-    }
-}//end OrderAdd
-
-
-class OrderList extends React.Component {//list of objects for the UI
-    constructor(){
-        super();
-        this.state = {orders : []};
-
-        this.createOrder = this.createOrder.bind(this);
-    }//end constructor
-
-    componentDidMount(){
-        this.loadData();
-    }
-
-    loadData(){
-        fetch('/api/orders').then(response =>
-            response.json()
-        ).then(data => {
-            console.log("Total count of records:", data._metadata.total_count);
-            data.records.forEach(order => {
-                order.dateCreated = new Date(order.dateCreated);
-                if(order.dateCompleted){
-                    order.dateCompleted = new Date(order.dateCompleted);
-                }
-            });
-            this.setState({orders: data.records});
-        }).catch(err => {
-            console.log(err);
+  loadData() {
+    fetch('/api/issues').then(response => {
+      if (response.ok) {
+        response.json().then(data => {
+          console.log("Total count of records:", data._metadata.total_count);
+          data.records.forEach(issue => {
+            issue.created = new Date(issue.created);
+            if (issue.completionDate)
+              issue.completionDate = new Date(issue.completionDate);
+          });
+          this.setState({ issues: data.records });
         });
-    }
-
-    createOrder(newOrder){
-        fetch('api/orders', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(newOrder), 
-        }).then(response => response.json()
-        ).then(updatedOrder => {
-            upatedOrder.created = new Date(updatedOrder.created);
-            if(updatedOrder.dateCompleted){
-                updatedOrder.dateCompleted = new Date(updatedOrder.dateCompleted);
-            }
-                const newOrders = this.state.orders.concat(updatedOrder);
-                this.setState({orders: newOrders});
-        }).catch(err => {
-            alert("Error in sending data to server: "+ err.message);
+      } else {
+        response.json().then(error => {
+          alert("Failed to fetch issues:" + error.message)
         });
-    }//end createOrder     
+      }
+    }).catch(err => {
+      alert("Error in fetching data from server:", err);
+    });
+  }
 
-    render(){
-        return(
-            <div>
+  createIssue(newIssue) {
+    fetch('/api/issues', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newIssue),
+    }).then(response => {
+      if (response.ok) {
+        response.json().then(updatedIssue => {
+          updatedIssue.created = new Date(updatedIssue.created);
+          if (updatedIssue.completionDate)
+            updatedIssue.completionDate = new Date(updatedIssue.completionDate);
+          const newIssues = this.state.issues.concat(updatedIssue);
+          this.setState({ issues: newIssues });
+        });
+      } else {
+        response.json().then(error => {
+          alert("Failed to add issue: " + error.message)
+        });
+      }
+    }).catch(err => {
+      alert("Error in sending data to server: " + err.message);
+    });
+  }
 
-                <OrderFilter />
-                <hr/>
-
-                <OrderTable orders={this.state.orders} />
-                
-                <hr />
-                <OrderAdd createOrder= {this.createOrder} />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h1>Issue Tracker</h1>
+        <IssueFilter />
+        <hr />
+        <IssueTable issues={this.state.issues} />
+        <hr />
+        <IssueAdd createIssue={this.createIssue}/>
+      </div>
+    );
+  }
 }
 
-
-
-ReactDOM.render(<OrderList />, contentNode); //render the component inside the content node
-
-
-
-
-
-
-
-
-
-
-
-
+ReactDOM.render(<IssueList />, contentNode);    // Render the component inside the content Node
