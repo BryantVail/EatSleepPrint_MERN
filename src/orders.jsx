@@ -1,4 +1,4 @@
-import OrderAdd from './OrderAdd.js';
+import OrderAdd from './OrderAdd.jsx';
 
 const contentNode = document.getElementById('contents');
 
