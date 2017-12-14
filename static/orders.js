@@ -214,12 +214,13 @@ var OrderList = function (_React$Component3) {
 
       var myInit = {
         method: 'GET',
-        cache: 'default'
-
+        mode: 'no-cors',
+        credentials: 'omit',
+        origin: 'http://localhost:3000/'
       };
 
-      fetch('../server.js/api/orders', myInit).then(function (response) {
-        if (response.ok) {
+      fetch('http://localhost:3000/api/orders', myInit).then(function (response) {
+        if (response.records) {
           response.json().then(function (data) {
             console.log("Total count of records:", data._metadata.total_count);
             data.records.forEach(function (order) {
@@ -237,6 +238,14 @@ var OrderList = function (_React$Component3) {
         alert("Error in fetching data from server:" + err.message, err.message);
       });
     }
+
+    /*
+      var xhr = new XMLHttpRequest();
+      var method  = 'GET';
+      var url     = 'http://localhost:3000/api/orders';
+      xhr.open(method, url);
+    */
+
   }, {
     key: 'createOrder',
     value: function createOrder(newOrder) {
