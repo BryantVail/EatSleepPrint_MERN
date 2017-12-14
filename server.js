@@ -13,9 +13,11 @@ app.use(bodyParser.json());
 
 
 app.get('/api/orders', (req,res) => {
-    console.log('processed "/api/orders"');
+    
     db.collection('orders').find().toArray().then(orders =>{
+        console.log('processed "/api/orders"');
         const metadata = {total_count:orders.length};
+        
         res.json({_metadata: metadata, records:orders})
     }).catch(error =>{
         console.log(error);
@@ -25,6 +27,7 @@ app.get('/api/orders', (req,res) => {
 
 app.post('/api/orders', (req,res) => {
     const newOrder = req.body;
+
     
     newOrder.dateCreated = new Date();
 
@@ -49,7 +52,7 @@ app.post('/api/orders', (req,res) => {
 
 
 let db;
-MongoClient.connect('mongodb://localhost/C:/mongodb/server/3.6/bin/OrderTracker').then(connection => {
+MongoClient.connect('mongodb://localhost/OrderTracker').then(connection => {
     db = connection;
     app.listen(3000, () =>{
         console.log('App status:Running, port:3000');
