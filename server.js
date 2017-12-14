@@ -15,8 +15,13 @@ app.use(bodyParser.json());
 app.get('/api/orders', (req,res) => {
     
     db.collection('orders').find().toArray().then(orders =>{
-        console.log('processed "/api/orders"');
+        
         const metadata = {total_count:orders.length};
+        console.log('processed "/api/orders"'+orders.forEach(function(element){
+            
+            console.log(element._id+"\n");
+        })
+    );
         
         res.json({_metadata: metadata, records:orders})
     }).catch(error =>{
