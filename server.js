@@ -17,13 +17,15 @@ app.get('/api/orders', (req,res) => {
     db.collection('orders').find().toArray().then(orders =>{
         
         const metadata = {total_count:orders.length};
-        console.log('processed "/api/orders"'+orders.forEach(function(element){
-            
-            console.log(element._id+"\n");
-        })
-    );
+        //test console
+        console.log('processed "/api/orders"'+orders.forEach(
+            function(element){            
+                console.log(element._id+"\n");
+                }
+            )+console.log(metadata.total_count)
+        );//end test console
         
-        res.json({_metadata: metadata, records:orders})
+        res.json({_metadata: metadata, records:orders});
     }).catch(error =>{
         console.log(error);
         res.status(500).json({message:'Internal Server Error: ${error}'});

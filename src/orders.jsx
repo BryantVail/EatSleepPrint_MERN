@@ -95,7 +95,7 @@ class OrderList extends React.Component {
     };
 
     fetch('http://localhost:3000/api/orders', myInit).then(response => {
-      if (response.ok == false) {
+      if (response.records) {
         response.json().then(data => {
           console.log("Total count of records:", data._metadata.total_count);
           data.records.forEach(order => {

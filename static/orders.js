@@ -220,7 +220,7 @@ var OrderList = function (_React$Component3) {
       };
 
       fetch('http://localhost:3000/api/orders', myInit).then(function (response) {
-        if (response.ok == false) {
+        if (response.records) {
           response.json().then(function (data) {
             console.log("Total count of records:", data._metadata.total_count);
             data.records.forEach(function (order) {
