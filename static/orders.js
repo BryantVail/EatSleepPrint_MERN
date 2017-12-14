@@ -214,11 +214,11 @@ var OrderList = function (_React$Component3) {
 
       var myInit = {
         method: 'GET',
-        cache: 'default'
-
+        cache: 'default',
+        mode: 'cors'
       };
 
-      fetch('../server.js/api/orders', myInit).then(function (response) {
+      fetch('/api/orders', myInit).then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
             console.log("Total count of records:", data._metadata.total_count);

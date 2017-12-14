@@ -89,11 +89,11 @@ class OrderList extends React.Component {
 
     var myInit = {
       method:'GET',
-      cache: 'default'
-
+      cache: 'default',
+      mode: 'cors'
     };
 
-    fetch('../server.js/api/orders', myInit).then(response => {
+    fetch('/api/orders', myInit).then(response => {
       if (response.ok) {
         response.json().then(data => {
           console.log("Total count of records:", data._metadata.total_count);

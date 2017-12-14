@@ -25,15 +25,27 @@ app.get('/api/orders', (req,res) => {
 
 app.post('/api/orders', (req,res) => {
     const newOrder = req.body;
-    newOrder.id = orders.length +1;
+    
     newOrder.dateCreated = new Date();
 
     if(!newOrder.status){
         newOrder.status = "New";
-        orders.push(newOrder);
-        res.json(newOrder);
     }
-})
+    const err = validateOrder(NewOrder)
+        if(err){
+            res.status(422).json({message:'invalid request: ${err}'});
+            return;
+        }
+    
+    db.collection('orders').insertOne(newOrder).then(result =>
+        db.collection('orders').find({_id: result.insertedId}).limit(1).next()
+    ).then(newOrder =>{
+        res.json(newOrder);
+    }).catch(error => {
+        console.log(error);
+        res.status(500).json({message:'Internal Server Error: ${error}'});
+    });
+});
 
 
 let db;
