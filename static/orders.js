@@ -1,4 +1,5 @@
 'use strict';
+var _OrderAdd = require('./OrderAdd.js');
 
 var _createClass = function () { 
     function defineProperties(target, props){ 
@@ -25,11 +26,13 @@ var _createClass = function () {
   }; 
 }();
 
-var _OrderAdd = require('./OrderAdd.js');
+
 
 var _OrderAdd2 = _interopRequireDefault(_OrderAdd);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { 
+    return obj && obj.__esModule ? obj : { default: obj }; 
+}
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
