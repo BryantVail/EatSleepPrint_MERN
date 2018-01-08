@@ -1,17 +1,27 @@
 const express       = require('express');
 const bodyParser    = require('body-parser');
 const MongoClient   = require('mongodb').MongoClient;
-const Order         = require('./order.js');
+
+const morgan        = require('morgan');
+const path          = require('path');
 
 
 const app = express();
+
 app.set('json spaces', 4);
-app.use(express.static('static'));
+
+app.use(morgan("default"));
+
+var publicPath = path.resolve(__dirname, "static");
+app.use(express.static(publicPath));
 app.use(bodyParser.json());
 
 
 
-
+app.get('/',(req,res)=>{
+    res.sendFile("orders.html");
+    console.log(req.body.json());
+});
 
 app.get('/api/orders', (req,res) => {
     
