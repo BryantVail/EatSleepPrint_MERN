@@ -69,18 +69,52 @@
 
 "use strict";
 
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _OrderAdd = __webpack_require__(1);
+
+var _createClass = function () { 
+    function defineProperties(target, props){ 
+      for (var i = 0; i < props.length; i++) {
+        var descriptor = props[i]; 
+        descriptor.enumerable = descriptor.enumerable || false; 
+        descriptor.configurable = true; 
+        if ("value" in descriptor){
+          descriptor.writable = true; 
+        }        
+        Object.defineProperty(target, descriptor.key, descriptor); 
+      } 
+    } 
+  
+  //enhancing object props
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) {
+      defineProperties(Constructor.prototype, protoProps);
+    }      
+    if (staticProps) {
+      defineProperties(Constructor, staticProps);
+    }
+    return Constructor; 
+  }; 
+}();
+
+
 
 var _OrderAdd2 = _interopRequireDefault(_OrderAdd);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) { 
+    return obj && obj.__esModule ? obj : { default: obj }; 
+}
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _classCallCheck(instance, Constructor) { 
+  if (!(instance instanceof Constructor)) {
+     throw new TypeError("Cannot call a class as a function"); 
+    } 
+  }
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+function _possibleConstructorReturn(self, call) {
+   if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); 
+    } 
+    return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
@@ -131,7 +165,7 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       'td',
       null,
-      props.order.created.toDateString()
+      props.order.dateCreated.toDateString()
     ),
     React.createElement(
       'td',
@@ -146,7 +180,7 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       'td',
       null,
-      props.order.completionDate ? props.issue.completionDate.toDateString() : ''
+      props.order.dateCompleted ? props.order.dateCompleted.toDateString() : ''
     ),
     React.createElement(
       'td',
@@ -157,7 +191,7 @@ var OrderRow = function OrderRow(props) {
 };
 
 function OrderTable(props) {
-  var orderRows = props.orders.map(function (issue) {
+  var orderRows = props.orders.map(function (order) {
     return React.createElement(OrderRow, { key: order._id, order: order });
   });
   return React.createElement(
@@ -246,12 +280,15 @@ var OrderList = function (_React$Component2) {
       };
 
       fetch('http://localhost:3000/api/orders', myInit).then(function (response) {
-        if (response.records) {
+        if (response.ok) {
           response.json().then(function (data) {
             console.log("Total count of records:", data._metadata.total_count);
-            data.records.forEach(function (order) {
-              order.created = new Date(order.created);
-              if (order.completionDate) order.completionDate = new Date(order.completionDate);
+            data.records.forEach((order) => {
+              order.dateCreated = new Date(order.dateCreated);
+              if (order.dateCompleted) {
+                order.dateCompleted = new Date(order.dateCompleted);
+              }
+               
             });
             _this3.setState({ orders: data.records });
           });
@@ -323,6 +360,11 @@ var OrderList = function (_React$Component2) {
 
 ReactDOM.render(React.createElement(OrderList, null), contentNode); // Render the component inside the content Node
 
+/*module.exports = {
+  orders: Orders
+};*/
+
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -334,7 +376,23 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _createClass = function () {
+   function defineProperties(target, props) {
+      for (var i = 0; i < props.length; i++) {
+         var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; 
+         descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); 
+        } 
+      } 
+      return function (Constructor, protoProps, staticProps) { 
+        if (protoProps) {
+          defineProperties(Constructor.prototype, protoProps); 
+        }
+        if (staticProps) {
+          defineProperties(Constructor, staticProps);  
+        }        
+        return Constructor;
+      };
+}();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 

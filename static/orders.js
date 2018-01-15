@@ -95,7 +95,7 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       'td',
       null,
-      props.order.created.toDateString()
+      props.order.dateCreated.toDateString()
     ),
     React.createElement(
       'td',
@@ -110,7 +110,7 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       'td',
       null,
-      props.order.completionDate ? props.issue.completionDate.toDateString() : ''
+      props.order.dateCompleted ? props.order.dateCompleted.toDateString() : ''
     ),
     React.createElement(
       'td',
@@ -121,7 +121,7 @@ var OrderRow = function OrderRow(props) {
 };
 
 function OrderTable(props) {
-  var orderRows = props.orders.map(function (issue) {
+  var orderRows = props.orders.map(function (order) {
     return React.createElement(OrderRow, { key: order._id, order: order });
   });
   return React.createElement(
@@ -210,12 +210,15 @@ var OrderList = function (_React$Component2) {
       };
 
       fetch('http://localhost:3000/api/orders', myInit).then(function (response) {
-        if (response.body.records) {
-          response.body.json().then(function (data) {
+        if (response.ok) {
+          response.json().then(function (data) {
             console.log("Total count of records:", data._metadata.total_count);
-            data.records.forEach(function (order) {
-              order.created = new Date(order.created);
-              if (order.completionDate) order.completionDate = new Date(order.completionDate);
+            data.records.forEach((order) => {
+              order.dateCreated = new Date(order.dateCreated);
+              if (order.dateCompleted) {
+                order.dateCompleted = new Date(order.dateCompleted);
+              }
+               
             });
             _this3.setState({ orders: data.records });
           });
@@ -287,6 +290,6 @@ var OrderList = function (_React$Component2) {
 
 ReactDOM.render(React.createElement(OrderList, null), contentNode); // Render the component inside the content Node
 
-module.exports = {
-  orders: orders
-};
+/*module.exports = {
+  orders: Orders
+};*/
