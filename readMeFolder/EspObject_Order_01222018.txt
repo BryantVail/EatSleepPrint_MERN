@@ -1,0 +1,65 @@
+graphic{
+
+	custom: bool
+	ThumbnailObject{
+	FileType,File
+	}
+	Author
+	Colors:int
+	Colors[], string
+	Copywrite: bool
+	creationDate
+	Description
+	LastUpdated
+}
+
+Order{
+
+	total,
+	tax,
+	PrintItems[]:PrintItem
+	Discount{},
+	user:user
+	State
+	AmountPaid:double
+	Deposit:nullable
+	Balance()
+	CreationDate
+	CompletionDate
+	notes[]
+	OrderDescription
+	NeddByDate
+	LastViewedUserDate
+	LastViewedEmployee
+	LastViewedEmployeeDate
+}
+
+LineItem{
+
+	UnitPrice
+	Quantity
+	ItemName
+	ItemDesc
+
+}
+
+GraphicLocation{
+
+	Design
+	ImageRadius
+	Location (ex:front,back,sleevL,sleeveR)
+	position (ex:center, FromEdge)
+}
+
+PrintItems{
+
+	color
+	type (ex:shirt)
+	sub-type(ex: polo)
+	material
+	brand:nullable
+	Size?
+	Graphics[]:Graphic
+	features[]:feature
+	Description
+}

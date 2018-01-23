@@ -1,0 +1,11 @@
+PS C:\Users\Bryan\Documents\GitHub\EatSleepPrint_MERN\node_modules\.bin> webpack ../../static/orders.js ../../static/ord
+ers.bundle.js
+Hash: b0cb9894b98ea00953e1
+Version: webpack 3.10.0
+Time: 760ms
+           Asset     Size  Chunks             Chunk Names
+orders.bundle.js  13.8 kB       0  [emitted]  main
+   [0] C:/Users/Bryan/Documents/GitHub/EatSleepPrint_MERN/static/orders.js 8.21 kB {0} [built]
+   [1] C:/Users/Bryan/Documents/GitHub/EatSleepPrint_MERN/static/OrderAdd.js 3.06 kB {0} [built]
+
+   
