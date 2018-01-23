@@ -1,30 +1,48 @@
 const express       = require('express');
+const path          = require('path');
+const fs            = require('fs');
 const bodyParser    = require('body-parser');
 const MongoClient   = require('mongodb').MongoClient;
-
 const morgan        = require('morgan');
-const path          = require('path');
-
 
 const app = express();
 
 app.set('json spaces', 4);
-
-app.use(morgan("default"));
-
 var publicPath = path.resolve(__dirname, "static");
-app.use(express.static(publicPath));
-app.use(bodyParser.json());
 
+
+
+//app.use(express.static(publicPath));
+app.use(morgan("default"));
+app.use(bodyParser.json());
+app.use(function(req, res, next){
+    console.log("RequestIP: \t"+ req.ip);
+    console.log("Request Date: \t"+ new Date());
+    next();
+});
+
+app.use(function(req, res, next){
+    var filePath = path.join(__dirname, "static", req.url);
+    fs.stat(filePath, function(err, fileInfo){
+        if(err){
+            next();
+            return;
+        }
+        if(fileInfo.isFile()){
+            res.sendFile(filePath);
+        }else{
+            next();
+        }
+    });
+});
 
 
 app.get('/',(req,res)=>{
-    res.sendFile("orders.html");
+    res.redirect("orders.html");
     console.log(req.body.json());
 });
 
 app.get('/api/orders', (req,res) => {
-    
     db.collection('orders').find().toArray().then(orders =>{
         
         const metadata = {total_count:orders.length};
@@ -45,19 +63,16 @@ app.get('/api/orders', (req,res) => {
 
 app.post('/api/orders', (req,res) => {
     const newOrder = req.body;
-
-    
     newOrder.dateCreated = new Date();
 
     if(!newOrder.status){
         newOrder.status = "New";
     }
-    const err = Order.validateOrder(NewOrder)
+    const err = validateOrder(NewOrder)
         if(err){
             res.status(422).json({message:'invalid request: ${err}'});
             return;
-        }
-    
+        }    
     db.collection('orders').insertOne(newOrder).then(result =>
         db.collection('orders').find({_id: result.insertedId}).limit(1).next()
     ).then(newOrder =>{

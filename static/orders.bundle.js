@@ -118,6 +118,7 @@ function _possibleConstructorReturn(self, call) {
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+//content node aka start of file
 var contentNode = document.getElementById('contents');
 
 var OrderFilter = function (_React$Component) {
@@ -129,6 +130,7 @@ var OrderFilter = function (_React$Component) {
     return _possibleConstructorReturn(this, (OrderFilter.__proto__ || Object.getPrototypeOf(OrderFilter)).apply(this, arguments));
   }
 
+  //orderFilter, still placeholder
   _createClass(OrderFilter, [{
     key: 'render',
     value: function render() {
@@ -143,6 +145,7 @@ var OrderFilter = function (_React$Component) {
   return OrderFilter;
 }(React.Component);
 
+
 var OrderRow = function OrderRow(props) {
   return React.createElement(
     'tr',
@@ -150,7 +153,7 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       'td',
       null,
-      props.order._id
+      props.order.user
     ),
     React.createElement(
       'td',
@@ -175,20 +178,15 @@ var OrderRow = function OrderRow(props) {
     React.createElement(
       'td',
       null,
-      props.order.effort
-    ),
-    React.createElement(
-      'td',
-      null,
-      props.order.dateCompleted ? props.order.dateCompleted.toDateString() : ''
+      props.order.dateCompleted ? props.order.dateCompleted.toDateString() : 'Open'
     ),
     React.createElement(
       'td',
       null,
       props.order.title
     )
-  );
-};
+  );//close tableRow/tr
+};//end function OrderRow
 
 function OrderTable(props) {
   var orderRows = props.orders.map(function (order) {
@@ -206,7 +204,7 @@ function OrderTable(props) {
         React.createElement(
           'th',
           null,
-          'Id'
+          'User'
         ),
         React.createElement(
           'th',
@@ -322,7 +320,9 @@ var OrderList = function (_React$Component2) {
         if (response.ok) {
           response.json().then(function (updatedOrder) {
             updatedOrder.created = new Date(updatedOrder.created);
-            if (updatedOrder.completionDate) updatedOrder.completionDate = new Date(updatedOrder.completionDate);
+            if (updatedOrder.completionDate) {
+              updatedOrder.completionDate = new Date(updatedOrder.completionDate);
+            }
             var newOrders = _this4.state.orders.concat(updatedOrder);
             _this4.setState({ orders: newOrders });
           });
@@ -435,11 +435,11 @@ var OrderAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "owner", placeholder: "Owner" }),
-          React.createElement("input", { type: "text", name: "title", placeholder: "Title" }),
+          React.createElement("input", { type: "text",display:"block", name: "owner", placeholder: "Owner" }),
+          React.createElement("input", { type: "text",display:"block",  name: "title", placeholder: "Title" }),
           React.createElement(
             "button",
-            null,
+            {type: "submit"},
             "Add"
           )
         )

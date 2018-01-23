@@ -63,11 +63,11 @@ var OrderAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text", name: "owner", placeholder: "Owner" }),
-          React.createElement("input", { type: "text", name: "title", placeholder: "Title" }),
+          React.createElement("input", { type: "text",display:"block", name: "owner", placeholder: "Owner" }),
+          React.createElement("input", { type: "text",display:"block",  name: "title", placeholder: "Title" }),
           React.createElement(
             "button",
-            null,
+            {type: "submit"},
             "Add"
           )
         )
