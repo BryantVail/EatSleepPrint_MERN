@@ -418,13 +418,14 @@ var OrderAdd = function (_React$Component) {
       e.preventDefault();
       var form = document.forms.orderAdd;
       this.props.createOrder({
-        owner: form.owner.value,
-        title: form.title.value,
+        orderTitle: form.title.value,
+        orderDescription: form.description.value,
         status: 'New',
-        created: new Date()
+        created: new Date(), 
+        userID: '01230451118'
       });
       // clear the form for the next input
-      form.owner.value = "";form.title.value = "";
+      form.title.value = "";form.description.value = "";
     }
   }, {
     key: "render",
@@ -435,8 +436,8 @@ var OrderAdd = function (_React$Component) {
         React.createElement(
           "form",
           { name: "orderAdd", onSubmit: this.handleSubmit },
-          React.createElement("input", { type: "text",display:"block", name: "owner", placeholder: "Owner" }),
-          React.createElement("input", { type: "text",display:"block",  name: "title", placeholder: "Title" }),
+          React.createElement("input", { type: "text",display:"block", name: "title", placeholder: "Order Title" }),
+          React.createElement("input", { type: "textarea",display:"block",  name: "description", placeholder: "Order Description" }),
           React.createElement(
             "button",
             {type: "submit"},

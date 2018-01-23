@@ -61,6 +61,36 @@ app.get('/api/orders', (req,res) => {
     });
 });
 
+const validOrderStatus = {
+    New: true,
+    UnderReview: true, 
+    ActionNeeded: true,
+    Quoted: true, 
+    PaymentNeeded:true,
+    Processing: true, 
+    Shipped: true, 
+    Complete: true, 
+    Cancelled: true
+};
+
+const orderFieldType = {
+    items: 'optional', 
+    orderDescription: 'required', 
+    userID: 'required', 
+    needByDate: 'optional',
+    orderTitle: 'required'
+};
+
+function validateOrder(order){
+    for(const field in orderFieldType){
+        const type = orderFieldType[field];
+        if(!type){
+            delete order[field];
+        } else if(type === 'required' && !order[field]){
+            return `${field} is required.`;
+        }
+    }
+}
 
 app.post('/api/orders', (req,res) => {
     const newOrder = req.body;
@@ -69,7 +99,7 @@ app.post('/api/orders', (req,res) => {
     if(!newOrder.status){
         newOrder.status = "New";
     }
-    const err = validateOrder(NewOrder)
+    const err = validateOrder(newOrder)
         if(err){
             res.status(422).json({message:'invalid request: ${err}'});
             return;

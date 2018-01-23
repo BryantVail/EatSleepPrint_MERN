@@ -1,0 +1,223 @@
+<Project>
+  <Name>EatSleepPrint_DataModels_01232018</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Untitled</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Order</Name>
+        <Access>Public</Access>
+        <Location left="48" top="368" />
+        <Size width="272" height="417" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private string userID { get; set; }</Member>
+        <Member type="Property">private string orderTitle { get; set; }</Member>
+        <Member type="Property">private date createdDate { get; set; }</Member>
+        <Member type="Property">private date completedDate { get; set; }</Member>
+        <Member type="Property">private date needByDate { get; set; }</Member>
+        <Member type="Property">private date LastViewedUserDate { get; set; }</Member>
+        <Member type="Property">private date LastViewedEmployeeDate { get; set; }</Member>
+        <Member type="Property">private string LastViewedEmployeeID { get; set; }</Member>
+        <Member type="Property">private string orderState { get; set; }</Member>
+        <Member type="Property">private List&lt;taxRate&gt; taxes { get; set; }</Member>
+        <Member type="Property">private double depositNeeded { get; set; }</Member>
+        <Member type="Property">private List&lt;PrintItem&gt; Items { get; set; }</Member>
+        <Member type="Property">private string orderDescription { get; set; }</Member>
+        <Member type="Property">private string orderNotes { get; set; }</Member>
+        <Member type="Property">private bool pastDue { get; set; }</Member>
+        <Member type="Method">public bool newStatusChange()</Member>
+        <Member type="Method">public double getBalance()</Member>
+        <Member type="Method">public double AmountPaid()</Member>
+        <Member type="Method">public double getTotalPrice()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LineItem</Name>
+        <Access>Public</Access>
+        <Location left="78" top="827" />
+        <Size width="211" height="166" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private double unitPrice { get; set; }</Member>
+        <Member type="Property">private int quantity { get; set; }</Member>
+        <Member type="Property">private string itemName { get; set; }</Member>
+        <Member type="Property">private string itemDescription { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PrintItem</Name>
+        <Access>Public</Access>
+        <Location left="78" top="1070" />
+        <Size width="214" height="221" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private string itemColor { get; set; }</Member>
+        <Member type="Property">private string type { get; set; }</Member>
+        <Member type="Property">private string subType { get; set; }</Member>
+        <Member type="Property">private string material { get; set; }</Member>
+        <Member type="Property">private string brand { get; set; }</Member>
+        <Member type="Property">private string size { get; set; }</Member>
+        <Member type="Property">private List&lt;Graphic&gt; graphics { get; set; }</Member>
+        <Member type="Property">private List&lt;Feature&gt; features { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Graphic</Name>
+        <Access>Public</Access>
+        <Location left="317" top="801" />
+        <Size width="198" height="262" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private bool custom { get; set; }</Member>
+        <Member type="Property">private string author { get; set; }</Member>
+        <Member type="Property">private List&lt;string&gt; colors { get; set; }</Member>
+        <Member type="Property">private date LastUpdated { get; set; }</Member>
+        <Member type="Property">private date createdDate { get; set; }</Member>
+        <Member type="Property">private string description { get; set; }</Member>
+        <Member type="Property">private user SubmittedBy { get; set; }</Member>
+        <Member type="Property">private bool copyright { get; set; }</Member>
+        <Member type="Method">public int ColorCount()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GraphicLocation</Name>
+        <Access>Public</Access>
+        <Location left="317" top="1129" />
+        <Size width="162" height="157" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private Graphic graphic { get; set; }</Member>
+        <Member type="Property">private double imageRadius { get; set; }</Member>
+        <Member type="Property">private string location { get; set; }</Member>
+        <Member type="Property">private string placement { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Customer</Name>
+        <Access>Public</Access>
+        <Location left="338" top="478" />
+        <Size width="255" height="219" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private List&lt;Order&gt; Orders { get; set; }</Member>
+        <Member type="Property">private bool accountState { get; set; }</Member>
+        <Member type="Property">private string billingState { get; set; }</Member>
+        <Member type="Property">private List&lt;Address&gt; AddressesBilling { get; set; }</Member>
+        <Member type="Property">private List&lt;Address&gt; AddressesShipping { get; set; }</Member>
+        <Member type="Method">public double TotalSpent()</Member>
+        <Member type="Method">public double OrderCount()</Member>
+        <Member type="Method">public date lastCompletedOrderDate()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Message</Name>
+        <Access>Public</Access>
+        <Location left="697" top="16" />
+        <Size width="210" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private string messageText { get; set; }</Member>
+        <Member type="Property">private date sentTimeStamp { get; set; }</Member>
+        <Member type="Property">private string sentBy { get; set; }</Member>
+        <Member type="Property">private string sentTo { get; set; }</Member>
+        <Member type="Method">public void Send()</Member>
+        <Member type="Property">private string messageStatus { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>User</Name>
+        <Access>Public</Access>
+        <Location left="113" top="16" />
+        <Size width="193" height="225" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private string email { get; set; }</Member>
+        <Member type="Property">private string password { get; set; }</Member>
+        <Member type="Property">private date created { get; set; }</Member>
+        <Member type="Property">private string userStatus { get; set; }</Member>
+        <Member type="Method">public string UserID()</Member>
+        <Member type="Method">public date LastSignedIn()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Employee</Name>
+        <Access>Public</Access>
+        <Location left="363" top="200" />
+        <Size width="230" height="219" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private string AuthorizationLevel { get; set; }</Member>
+        <Member type="Property">private List&lt;Activity&gt; userActions { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>UserAction</Name>
+        <Access>Public</Access>
+        <Location left="376" top="16" />
+        <Size width="199" height="148" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private string userID { get; set; }</Member>
+        <Member type="Property">private string orderID { get; set; }</Member>
+        <Member type="Property">private date timeStamp { get; set; }</Member>
+        <Member type="Property">private string actionType { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Address</Name>
+        <Access>Public</Access>
+        <Location left="697" top="266" />
+        <Size width="210" height="247" />
+        <Collapsed>False</Collapsed>
+        <Member type="Property">private string streetNumber { get; set; }</Member>
+        <Member type="Property">private string preDirectional { get; set; }</Member>
+        <Member type="Property">private string streetName { get; set; }</Member>
+        <Member type="Property">private string postDirectional { get; set; }</Member>
+        <Member type="Property">private string streetType { get; set; }</Member>
+        <Member type="Property">private string city { get; set; }</Member>
+        <Member type="Property">private string state { get; set; }</Member>
+        <Member type="Property">private string zip { get; set; }</Member>
+        <Member type="Property">private string addressType { get; set; }</Member>
+        <Member type="Property">private bool active { get; set; }</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Association" first="1" second="2">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>164</X>
+          <Y>1041</Y>
+        </BendPoint>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Dependency" first="3" second="4">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="7" second="5">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>344</X>
+          <Y>444</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="7" second="8">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="9" second="8">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>414</X>
+          <Y>163</Y>
+        </BendPoint>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

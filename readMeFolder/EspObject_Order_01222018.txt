@@ -14,21 +14,28 @@ graphic{
 }
 
 Order{
-
-	total,
-	tax,
-	PrintItems[]:PrintItem
-	Discount{},
-	user:user
-	State
-	AmountPaid:double
-	Deposit:nullable
-	Balance()
 	CreationDate
 	CompletionDate
-	notes[]
-	OrderDescription
-	NeddByDate
+	NeedByDate
+	orderState
+	Customer: <Customer>
+	total( ((1+taxRate)*lineItemTotal()),
+	taxRate,
+
+	Balance(total - amountPaid)
+	AmountPaid:	double,	db.collection(payments).find({OrderNumber:orderNum}).then(payments){
+			const PaymentsMade = payments.map(x => 
+				let runningTotal = 0;
+				x.total += runningTotal;
+			);//end PaymentsMade payments.map(...)
+			} 
+	Deposit:	double,
+	Discount{}
+
+	PrintItems[]:PrintItem, 
+	OrderDescription: 	string //(from customer), 
+	orderNotes:			string (internal Use)
+	
 	LastViewedUserDate
 	LastViewedEmployee
 	LastViewedEmployeeDate
