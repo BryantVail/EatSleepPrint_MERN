@@ -1,17 +1,4 @@
-graphic{
 
-	custom: bool
-	ThumbnailObject{
-	FileType,File
-	}
-	Author
-	Colors:int
-	Colors[], string
-	Copywrite: bool
-	creationDate
-	Description
-	LastUpdated
-}
 
 Order{
 	CreationDate
@@ -20,8 +7,9 @@ Order{
 	orderState
 	Customer: <Customer>
 	total( ((1+taxRate)*lineItemTotal()),
-	taxRate,
-
+	taxes[],
+	taxRate{}, **Object**
+	
 	Balance(total - amountPaid)
 	AmountPaid:	double,	db.collection(payments).find({OrderNumber:orderNum}).then(payments){
 			const PaymentsMade = payments.map(x => 
@@ -29,7 +17,7 @@ Order{
 				x.total += runningTotal;
 			);//end PaymentsMade payments.map(...)
 			} 
-	Deposit:	double,
+	DepositNeeded:	double, NULL, 
 	Discount{}
 
 	PrintItems[]:PrintItem, 
@@ -50,14 +38,6 @@ LineItem{
 
 }
 
-GraphicLocation{
-
-	Design
-	ImageRadius
-	Location (ex:front,back,sleevL,sleeveR)
-	position (ex:center, FromEdge)
-}
-
 PrintItems{
 
 	color
@@ -70,3 +50,27 @@ PrintItems{
 	features[]:feature
 	Description
 }
+
+graphic{
+
+	custom: bool
+	ThumbnailObject{
+	FileType,File
+	}
+	Author
+	Colors:int
+	Colors[], string
+	Copywrite: bool
+	creationDate
+	Description
+	LastUpdated
+}
+
+GraphicLocation{
+
+	Design
+	ImageRadius
+	Location (ex:front,back,sleevL,sleeveR)
+	position (ex:center, FromEdge)
+}
+
