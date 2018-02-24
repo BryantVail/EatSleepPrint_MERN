@@ -4,6 +4,7 @@ const fs            = require('fs');
 const bodyParser    = require('body-parser');
 const MongoClient   = require('mongodb').MongoClient;
 const morgan        = require('morgan');
+const React         = require('react');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use(function(req, res, next){
 app.get('/',(req,res)=>{
     res.redirect("orders.html");
     console.log(req.body.json());
+
 });
 
 app.get('/api/orders', (req,res) => {
@@ -54,7 +56,7 @@ app.get('/api/orders', (req,res) => {
             )+console.log(metadata.total_count)
         );//end test console
         
-        res.json({_metadata: metadata, records:orders});
+        res.json({_metadata: metadata, records:orders, React: React});
     }).catch(error =>{
         console.log(error);
         res.status(500).json({message:'Internal Server Error: ${error}'});
@@ -118,8 +120,8 @@ app.post('/api/orders', (req,res) => {
 let db;
 MongoClient.connect('mongodb://localhost/OrderTracker').then(connection => {
     db = connection;
-    app.listen(3000, () =>{
-        console.log('App status:Running, port:3000');
+    app.listen(1990, () =>{
+        console.log('App status:Running, port:1990');
     });
 }).catch(error =>{
     console.log('ERROR:', error);

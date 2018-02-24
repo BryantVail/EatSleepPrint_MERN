@@ -1,8 +1,8 @@
 
 var contentNode = document.getElementById('contents');
-var createClass = require('create-react-class');
-var OrderAdd   = require("./OrderAdd");
-var React       = require('react');
+//var createClass = require('create-react-class');
+
+//var React       = require('react');
 var create      = React.createElement;
 
 
@@ -13,7 +13,7 @@ var OrderFilter = createClass({
     },
     render: function(){
         return(
-            React.createElement('div', {name:'name'},"Order Filter Placeholder")
+            create('div', {name:'name'},"Order Filter Placeholder")
         )
     },
 
@@ -161,7 +161,7 @@ var OrderList = createClass({
 
 
     //}(React.Component);
-    var rootElement = React.createElement('div', {}, 
+    var rootElement = create('div', {}, 
         create(OrderList, {})
     );
       

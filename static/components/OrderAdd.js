@@ -1,5 +1,5 @@
-var createClass = require('create-react-class');
-var React = require('react');
+//var createClass = require('create-react-class');
+
 var create = React.createElement;
 
 var OrderAdd = createClass({

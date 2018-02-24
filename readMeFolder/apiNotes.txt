@@ -1,0 +1,9 @@
+\\BRYAN-PC\Users\Bryan\Documents\GitHub\EatSleepPrint_MERN\readMeFolder\DocsAndResources
+
+what is being put on the screen, 
+
+why it is, 
+
+api should be generic, 
+
+library or framework, requests to the server, 
