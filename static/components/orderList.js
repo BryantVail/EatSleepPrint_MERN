@@ -1,5 +1,8 @@
+"strict mode";
+/* global React, */
 
-var contentNode = document.getElementById('contents');
+
+var contentNode = document.getElementById("contents");
 //var createClass = require('create-react-class');
 
 //var React       = require('react');
@@ -23,7 +26,7 @@ var OrderFilter = createClass({
 
 var OrderRow = createClass({
     propTypes:{
-      /*
+        /*
         user: React.PropTypes.string.isRequired,
         dueDate: React.PropTypes.Date.isRequired,
         orderState: React.PropTypes.string.isRequired,
@@ -33,17 +36,17 @@ var OrderRow = createClass({
     },
     render: function(){
         return(
-            create('tr', null, 
-                create('td', null, props.order.user), 
-                create('td',null,props.order.dueDate.toDateString()),
-                create('td',null,props.order.dateCreated.toDateString()),
-                create('td',null,props.order.orderState),
-                create('td',null,props.order.balance),
-                create('td',null,props.order.orderTotal),
-                )
-        )
+            create("tr", null, 
+                create("td", null, props.order.user), 
+                create("td",null,props.order.dueDate.toDateString()),
+                create("td",null,props.order.dateCreated.toDateString()),
+                create("td",null,props.order.orderState),
+                create("td",null,props.order.balance),
+                create("td",null,props.order.orderTotal)
+            )
+        );
     },
-})
+});
 
 
     
