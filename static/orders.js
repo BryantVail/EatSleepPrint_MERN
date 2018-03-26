@@ -16,6 +16,11 @@ OrderFilter.render = function(){
 
 
 let OrderRow = Object.assign(OrderRow, React.Component.prototype);
+
+/*
+*   Constructor re-defining only needed when there may be 
+*     ->other initiation statements necessary
+*/
 Object.defineProperty(OrderRow, 
     OrderRow.prototype.constructor, function(props){
         this.props = props;
