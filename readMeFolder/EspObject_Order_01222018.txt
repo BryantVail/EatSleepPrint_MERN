@@ -1,0 +1,76 @@
+
+
+Order{
+	CreationDate
+	CompletionDate
+	NeedByDate
+	orderState
+	Customer: <Customer>
+	total( ((1+taxRate)*lineItemTotal()),
+	taxes[],
+	taxRate{}, **Object**
+	
+	Balance(total - amountPaid)
+	AmountPaid:	double,	db.collection(payments).find({OrderNumber:orderNum}).then(payments){
+			const PaymentsMade = payments.map(x => 
+				let runningTotal = 0;
+				x.total += runningTotal;
+			);//end PaymentsMade payments.map(...)
+			} 
+	DepositNeeded:	double, NULL, 
+	Discount{}
+
+	PrintItems[]:PrintItem, 
+	OrderDescription: 	string //(from customer), 
+	orderNotes:			string (internal Use)
+	
+	LastViewedUserDate
+	LastViewedEmployee
+	LastViewedEmployeeDate
+}
+
+LineItem{
+
+	UnitPrice
+	Quantity
+	ItemName
+	ItemDesc
+
+}
+
+PrintItems{
+
+	color
+	type (ex:shirt)
+	sub-type(ex: polo)
+	material
+	brand:nullable
+	Size?
+	Graphics[]:Graphic
+	features[]:feature
+	Description
+}
+
+graphic{
+
+	custom: bool
+	ThumbnailObject{
+	FileType,File
+	}
+	Author
+	Colors:int
+	Colors[], string
+	Copywrite: bool
+	creationDate
+	Description
+	LastUpdated
+}
+
+GraphicLocation{
+
+	Design
+	ImageRadius
+	Location (ex:front,back,sleevL,sleeveR)
+	position (ex:center, FromEdge)
+}
+
