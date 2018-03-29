@@ -2,7 +2,7 @@
 /* global requirejs */
 
 requirejs.config({
-  baseUrl:"./scripts/",
+  baseUrl:"../scripts/",
   paths:{
     //userDefined
     "OrderAdd": "components/OrderAdd",
