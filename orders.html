@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; font-src  *;" >
+    <meta http-equiv="Content-Security-Policy" content="font-src  '*';" >
     
     <title>Document</title>
     <!-- Latest compiled and minified JavaScript -->
@@ -27,7 +27,7 @@
     <script data-main="scripts/config" src="scripts/requireJs/require.js" ></script>
 
     <!-- run below before rendering page & after 'jquery' is already returned. -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.min.css" >
 
     <script>
         require(["config"], function(){

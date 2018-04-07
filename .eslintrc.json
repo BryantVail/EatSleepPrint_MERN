@@ -3,10 +3,7 @@
         "browser": true,
         "commonjs": true,
         "es6": true,
-        "node":true,
-        "mongo":true,
-        "jquery":true,
-        "jasmine":true
+        "node": true
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -15,7 +12,7 @@
     "rules": {
         "indent": [
             "error",
-            2
+            4
         ],
         "linebreak-style": [
             "error",

@@ -16,13 +16,16 @@ app.set("json spaces", 4);
 
 //CORS for CDN's
 app.use(function(req, res, next){
-    let CDNs = []
+    let CDNs = [];
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Header", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Content-Security-Policy", "font-src 'data'");
+    res.header("Content-Security-Policy", "default-src 'self'");
+    next();
 });
 
 //app.use(express.static(publicPath));
-app.use(morgan("default"));
+app.use(morgan("combined"));
 app.use(bodyParser.json());
 app.use(function(req, res, next){
   console.log("RequestIP: \t"+ req.ip);
@@ -47,8 +50,8 @@ app.use(function(req, res, next){
 
 
 app.get("/",(req,res)=>{
-  res.redirect("orders.html");
-  console.log(req.body.json());
+  res.redirect("../orders.html");
+  //console.log(req.body.json());
 
 });
 
