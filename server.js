@@ -14,7 +14,12 @@ const app = express();
 app.set("json spaces", 4);
 //let publicPath = path.resolve(__dirname, "static");
 
-
+//CORS for CDN's
+app.use(function(req, res, next){
+    let CDNs = []
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Header", "Origin, X-Requested-With, Content-Type, Accept");
+});
 
 //app.use(express.static(publicPath));
 app.use(morgan("default"));
