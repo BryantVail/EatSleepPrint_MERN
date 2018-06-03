@@ -42,78 +42,78 @@ function OrderTable(props) {
 }
 
 class OrderAdd extends React.Component {
-  constructor() {
-    super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+    constructor() {
+        super();
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
 
-  handleSubmit(e) {
-    e.preventDefault();
-    var form = document.forms.orderAdd;
-    this.props.createOrder({
-      owner: form.owner.value,
-      title: form.title.value,
-      status: 'New',
-      created: new Date(),
-    });
-    // clear the form for the next input
-    form.owner.value = ""; form.title.value = "";
-  }
+    handleSubmit(e) {
+        e.preventDefault();
+        var form = document.forms.orderAdd;
+        this.props.createOrder({
+            owner: form.owner.value,
+            title: form.title.value,
+            status: 'New',
+            created: new Date(),
+        });
+        // clear the form for the next input
+        form.owner.value = ""; form.title.value = "";
+    }
 
-  render() {
-    return (
-      <div>
-        <form name="orderAdd" onSubmit={this.handleSubmit}>
-          <input type="text" name="owner" placeholder="Owner" />
-          <input type="text" name="title" placeholder="Title" />
-          <button>Add</button>
-        </form>
-      </div>
-    )
-  }
+    render() {
+        return (
+            <div>
+                <form name="orderAdd" onSubmit={this.handleSubmit}>
+                    <input type="text" name="owner" placeholder="Owner" />
+                    <input type="text" name="title" placeholder="Title" />
+                    <button>Add</button>
+                </form>
+            </div>
+        )
+    }
 }
 
 class OrderList extends React.Component {
-  constructor() {
-    super();
-    this.state = { orders: [] };
+    constructor() {
+        super();
+        this.state = { orders: [] };
 
-    this.createOrder = this.createOrder.bind(this);
-  }
+        this.createOrder = this.createOrder.bind(this);
+    }
 
-  componentDidMount() {
-    this.loadData();
-  }
+    componentDidMount() {
+        this.loadData();
+    }
 
-  loadData() {
+    loadData() {
 
-    var myInit = {
-      method:'GET',
-      mode:'no-cors',
-      credentials: 'omit',
-      origin: 'http://localhost:3000/'
-    };
+        var myInit = {
+            method:'GET',
+            mode:'no-cors',
+            credentials: 'omit',
+            origin: 'http://localhost:3000/'
+        };
 
-    fetch('http://localhost:3000/api/orders', myInit).then(response => {
-      if (response.records) {
-        response.json().then(data => {
-          console.log("Total count of records:", data._metadata.total_count);
-          data.records.forEach(order => {
-            order.created = new Date(order.created);
-            if (order.completionDate)
-            order.completionDate = new Date(order.completionDate);
-          });
-          this.setState({ orders: data.records });
+        fetch('http://localhost:3000/api/orders', myInit).then(response => {
+            if (response.records) {
+                response.json().then(data => {
+                    console.log("Total count of records:", data._metadata.total_count);
+                    data.records.forEach(order => {
+                        order.created = new Date(order.created);
+                        if (order.completionDate)
+                            order.completionDate = new Date(order.completionDate);
+                    });
+                    this.setState({ orders: data.records });
+                });//end response.json().then(data=>{})
+            } else {
+                response.json().then(error => {
+                    alert("Failed to fetch orders:" + error.message)
+                });
+            }
+        }).catch(err => {
+            alert("Error in fetching data from server:"+err.message, err.message);
         });
-      } else {
-        response.json().then(error => {
-          alert("Failed to fetch orders:" + error.message)
-        });
-      }
-    }).catch(err => {
-      alert("Error in fetching data from server:"+err.message, err.message);
-    });
-  }
+    }
 
 /*
   var xhr = new XMLHttpRequest();
@@ -122,42 +122,42 @@ class OrderList extends React.Component {
   xhr.open(method, url);
 */
 
-  createOrder(newOrder) {
-    fetch('/api/orders', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newOrder),
-    }).then(response => {
-      if (response.ok) {
-        response.json().then(updatedOrder => {
-          updatedOrder.created = new Date(updatedOrder.created);
-          if (updatedOrder.completionDate)
-            updatedOrder.completionDate = new Date(updatedOrder.completionDate);
-          const newOrders = this.state.orders.concat(updatedOrder);
-          this.setState({ orders: newOrders });
+    createOrder(newOrder) {
+        fetch('/api/orders', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newOrder),
+        }).then(response => {
+            if (response.ok) {
+                response.json().then(updatedOrder => {
+                    updatedOrder.created = new Date(updatedOrder.created);
+                    if (updatedOrder.completionDate)
+                        updatedOrder.completionDate = new Date(updatedOrder.completionDate);
+                    const newOrders = this.state.orders.concat(updatedOrder);
+                    this.setState({ orders: newOrders });
+                });
+            } else {
+                response.json().then(error => {
+                    alert("Failed to add order: " + error.message)
+                });
+            }
+        }).catch(err => {
+            alert("Error in sending data to server: " + err.message);
         });
-      } else {
-        response.json().then(error => {
-          alert("Failed to add order: " + error.message)
-        });
-      }
-    }).catch(err => {
-      alert("Error in sending data to server: " + err.message);
-    });
-  }
+    }
 
-  render() {
-    return (
-      <div>
-        <h1>Order Tracker</h1>
-        <OrderFilter />
-        <hr />
-        <OrderTable orders={this.state.orders} />
-        <hr />
-        <OrderAdd createOrder={this.createOrder}/>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <h1>Order Tracker</h1>
+                <OrderFilter />
+                <hr />
+                <OrderTable orders={this.state.orders} />
+                <hr />
+                <OrderAdd createOrder={this.createOrder}/>
+            </div>
+        );
+    }
 }
 
 ReactDOM.render(<OrderList />, contentNode);    // Render the component inside the content Node

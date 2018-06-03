@@ -21,8 +21,8 @@ app.get('/api/orders', (req,res) => {
         console.log('processed "/api/orders"'+orders.forEach(
             function(element){            
                 console.log(element._id+"\n");
-                }
-            )+console.log(metadata.total_count)
+            }
+        )+console.log(metadata.total_count)
         );//end test console
         
         res.json({_metadata: metadata, records:orders});
@@ -42,10 +42,10 @@ app.post('/api/orders', (req,res) => {
         newOrder.status = "New";
     }
     const err = validateOrder(NewOrder)
-        if(err){
-            res.status(422).json({message:'invalid request: ${err}'});
-            return;
-        }
+    if(err){
+        res.status(422).json({message:'invalid request: ${err}'});
+        return;
+    }
     
     db.collection('orders').insertOne(newOrder).then(result =>
         db.collection('orders').find({_id: result.insertedId}).limit(1).next()
