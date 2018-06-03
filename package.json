@@ -8,8 +8,8 @@
     "start": "nodemon -w server.js server.js",
     "compile": "babel ../../src --presets react,env --out-dir ../../static",
     "watch": "babel ../../src --presets react,env --out-dir ../../static -watch",
-    "change-cwd-test":{
-      "cwd":"C:/users/bryan/documents/gitHub/EatSleepPrint_MERN",
+    "change-cwd-test": {
+      "cwd": "C:/users/bryan/documents/gitHub/EatSleepPrint_MERN",
       "run": "node -e \"console.log(process.cwd())\""
     }
   },
@@ -25,6 +25,7 @@
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
+    "eslint": "^4.19.1",
     "nodemon": "^1.12.4"
   }
 }
