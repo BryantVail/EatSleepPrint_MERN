@@ -1,44 +1,44 @@
 const contentNode = document.getElementById('contents');
 
 class OrderFilter extends React.Component {
-  render() {
-    return (
-      <div>This is a placeholder for the Order Filter.</div>
-    )
-  }
+    render() {
+        return (
+            <div>This is a placeholder for the Order Filter.</div>
+        )
+    }
 }
 
 const OrderRow = (props) => (
-  <tr>
-    <td>{props.order._id}</td>
-    <td>{props.order.status}</td>
-    <td>{props.order.owner}</td>
-    <td>{props.order.created.toDateString()}</td>
-    <td>{props.order.effort}</td>
-    <td>{props.order.effort}</td>
-    <td>{props.order.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
-    <td>{props.order.title}</td>
-  </tr>
+    <tr>
+        <td>{props.order._id}</td>
+        <td>{props.order.status}</td>
+        <td>{props.order.owner}</td>
+        <td>{props.order.created.toDateString()}</td>
+        <td>{props.order.effort}</td>
+        <td>{props.order.effort}</td>
+        <td>{props.order.completionDate ? props.issue.completionDate.toDateString() : ''}</td>
+        <td>{props.order.title}</td>
+    </tr>
 )
 
 function OrderTable(props) {
-  const orderRows = props.orders.map(issue => <OrderRow key={order._id} order={order} />)
-  return (
-    <table className="bordered-table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Status</th>
-          <th>Owner</th>
-          <th>Created</th>
-          <th>Effort</th>
-          <th>Completion Date</th>
-          <th>Title</th>
-        </tr>
-      </thead>
-      <tbody>{orderRows}</tbody>
-    </table>
-  );
+    const orderRows = props.orders.map(issue => <OrderRow key={order._id} order={order} />)
+    return (
+        <table className="bordered-table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Status</th>
+                    <th>Owner</th>
+                    <th>Created</th>
+                    <th>Effort</th>
+                    <th>Completion Date</th>
+                    <th>Title</th>
+                </tr>
+            </thead>
+            <tbody>{orderRows}</tbody>
+        </table>
+    );
 }
 
 class OrderAdd extends React.Component {
