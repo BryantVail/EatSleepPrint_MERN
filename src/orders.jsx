@@ -115,12 +115,12 @@ class OrderList extends React.Component {
         });
     }
 
-/*
+    /*
   var xhr = new XMLHttpRequest();
   var method  = 'GET';
   var url     = 'http://localhost:3000/api/orders';
   xhr.open(method, url);
-*/
+    */
 
     createOrder(newOrder) {
         fetch('/api/orders', {
